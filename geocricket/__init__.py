@@ -8,6 +8,7 @@ from .geocricket import export_census_transportation
 from .geocricket import export_server_URL_data
 from .geocricket import add_field_to_file
 from .geocricket import add_rencat_id
+from .geocricket import ensure_crs
 
 from .kml import make_kml_pts
 from .kml import make_kml_lines

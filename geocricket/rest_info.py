@@ -40,23 +40,17 @@ def hifld_dict():
             'color': None,
             'outCRS': 4326},
         'HIFLD_Hospitals': {
-            'service': 'Hospital',
+            'service': 'Hospitals_gdb',
             'layer': 0,
             'idField': None,
             'color': None,
-            'outCRS': 4326},  # changed from Hospitals_1... 20230228
+            'outCRS': 3857},  # updated 20240919
         'HIFLD_Public_Schools': {
             'service': 'Public_Schools',
             'layer': 0,
             'idField': None,
             'color': None,
             'outCRS': 4326},  # updated from 3857 20240427
-        'HIFLD_Runways': {
-            'service': 'Runways',
-            'layer': 0,
-            'idField': None,
-            'color': None,
-            'outCRS': 3857},
         'HIFLD_Colleges_and_Universities_Campuses': {
             'service': 'Colleges_and_Universities_Campuses',
             'layer': 0,
@@ -99,18 +93,6 @@ def hifld_dict():
             'idField': None,
             'color': None,
             'outCRS': 3857},
-        'HIFLD_Public_Health_Departments': {
-            'service': 'Public_Health_Departments',
-            'layer': 0,
-            'idField': None,
-            'color': None,
-            'outCRS': 3857},
-        'HIFLD_Places_of_Worship': {
-            'service': 'AllPlacesOfWorship',
-            'layer': 0,
-            'idField': None,
-            'color': None,
-            'outCRS': 3857},
         'HIFLD_Private_Schools': {
             'service': 'Private_Schools',
             'layer': 0,
@@ -119,18 +101,6 @@ def hifld_dict():
             'outCRS': 4326},
         'HIFLD_Power_Plants': {
             'service': 'Plants_gdb',
-            'layer': 0,
-            'idField': None,
-            'color': None,
-            'outCRS': 3857},
-        'HIFLD_FedEx_Facilities': {
-            'service': 'FedEx_Facilities',
-            'layer': 0,
-            'idField': None,
-            'color': None,
-            'outCRS': 3857},
-        'HIFLD_Major_State_Government_Buildings': {
-            'service': 'Major_State_Government_Buildings',
             'layer': 0,
             'idField': None,
             'color': None,
@@ -148,7 +118,36 @@ def hifld_dict():
             'color': None,
             'outCRS': 4326},
         'HIFLD_BRS_EBS': {
-            'service': 'Broadband_Radio_Service_(BRS)_and_Educational_Broadband_Service_(EBS)_Transmitters',
+            'service': 'brs_ebs',
+            'layer': 5,
+            'idField': None,
+            'color': None,
+            'outCRS': 4326},
+        'HIFLD_Federal_Organizations': {
+            'service': 'organizationsfederal',
+            'layer': 0,
+            'idField': None,
+            'color': None,
+            'outCRS': 3857},
+        'HIFLD_State_Capitol_Buildings ': {
+            'service': 'StateCapitolBuildings',
+            'layer': 0,
+            'idField': None,
+            'color': None,
+            'outCRS': 3857},
+    }
+
+
+"""
+No longer provided by HIFLD to public:
+        'HIFLD_Major_State_Government_Buildings': {
+            'service': 'Major_State_Government_Buildings',
+            'layer': 0,
+            'idField': None,
+            'color': None,
+            'outCRS': 3857},
+        'HIFLD_Pharmacies': {
+            'service': 'Pharmacies',
             'layer': 0,
             'idField': None,
             'color': None,
@@ -159,17 +158,30 @@ def hifld_dict():
             'idField': None,
             'color': None,
             'outCRS': 3857},
-        'HIFLD_Pharmacies': {
-            'service': 'Pharmacies',
+        'HIFLD_FedEx_Facilities': {
+            'service': 'FedEx_Facilities',
             'layer': 0,
             'idField': None,
             'color': None,
-            'outCRS': 3857},  # back again? 230923
-    }
-
-
-"""
-No longer provided by HIFLD to public:
+            'outCRS': 3857},
+        'HIFLD_Places_of_Worship': {
+            'service': 'AllPlacesOfWorship',
+            'layer': 0,
+            'idField': None,
+            'color': None,
+            'outCRS': 3857},
+        'HIFLD_Public_Health_Departments': {
+            'service': 'Public_Health_Departments',
+            'layer': 0,
+            'idField': None,
+            'color': None,
+            'outCRS': 3857},
+        'HIFLD_Runways': {
+            'service': 'Runways',
+            'layer': 0,
+            'idField': None,
+            'color': None,
+            'outCRS': 3857},
         'HIFLD_EMS': {
             'service': 'Emergency_Medical_Service_(EMS)_Stations_gdb',
             'layer': 0,

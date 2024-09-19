@@ -13,6 +13,7 @@ import requests
 import shapely
 
 import geopandas as gpd
+from pathlib import Path
 
 
 # Rest API link definitions:
@@ -21,7 +22,6 @@ HIFLD_URL = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/ArcGIS/rest/services/
 
 # For restapi to not use arcpy things
 os.environ['RESTAPI_USE_ARCPY'] = 'FALSE'
-
 
 def check_connection():
     """
@@ -34,39 +34,80 @@ def check_connection():
         return False
 
 
+def ensure_crs(gdf, epsg=4326):
+    converted_gdf = gdf.to_crs(epsg=epsg)
+    return converted_gdf
+
+
+def ensure_gdf(file_path):
+    if isinstance(file_path, gpd.GeoDataFrame):
+        return file_path.copy()
+    else:
+        return gpd.read_file(file_path)
+
+
+def get_single_geometry(gdf, geo_index):
+    return gdf.geometry[geo_index]
+
+
+def get_dissolved_geometry(gdf):
+    dissolved_gdf = gdf.dissolve()
+    return dissolved_gdf.geometry[0]
+
+
 def convert_geometry_bound(
         file_path,
         epsg=4326,
-        poly_feat_ndx=0,
+        poly_feat_ndx=None,
         ):
     """
     Read geospatial polygon file path and return shapely object
     for feature selection by location.
 
-    Will disolve multiple polygons into one if poly_feat_ndx is zero
-    and there are more than one polygon in specified file.
+    Will disolve multiple polygons into one if poly_feat_ndx is not
+    defined.
 
     an optional epsg can be selected for resulting geometry, else
     default is EPSG:4326
 
     returns geomtery compatible with restapi select_by_location function
     """
-    if isinstance(file_path, gpd.GeoDataFrame):
-        gdf = file_path.copy()
+
+    gdf = ensure_gdf(file_path)
+    gdf_at_crs = ensure_crs(gdf, epsg)
+
+    if poly_feat_ndx is None:
+        gdf_geo = get_dissolved_geometry(gdf_at_crs)
     else:
-        gdf = gpd.read_file(file_path)
+        gdf_geo = get_single_geometry(gdf_at_crs, poly_feat_ndx)
 
-    gdf_at_crs = gdf.to_crs(epsg)
+    return restapi.Geometry(shapely.geometry.mapping(gdf_geo))
 
-    # disolve geometry
-    if (len(gdf_at_crs.geometry) > 1) and (poly_feat_ndx == 0):
-        gdf_at_crs = gdf_at_crs.dissolve()
 
-    gpd_geo = gdf_at_crs.geometry[poly_feat_ndx]
-    boundary_geo = restapi.Geometry(shapely.geometry.mapping(gpd_geo))
-
-    return boundary_geo
-
+def get_census_geo_layer_dict():
+    # collect 500k of each
+    return {
+        0: {
+            'name': 'Block_Groups',
+            'sub_service': '/Tracts*',
+            'layer': 4},
+        1: {
+            'name': 'Tracts',
+            'sub_service': '/Tracts*',
+            'layer': 4},  # this had changed remotely
+        2: {
+            'name': 'Counties',
+            'sub_service': '/State*',
+            'layer': 11},
+        3: {
+            'name': 'Tribal_Tracts',
+            'sub_service': '/Tribal*',
+            'layer': 3},
+        4: {
+            'name': 'Tribal_Block_Groups',
+            'sub_service': '/Tribal*',
+            'layer': 4}
+        }
 
 def export_census_geometry(
         boundary_geo,
@@ -94,29 +135,8 @@ def export_census_geometry(
     # TODO handle block geometry using last 10 year census...
     https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Tracts_Blocks/MapServer
     """
-    # collect 500k of each
-    layer_dict = {
-        0: {
-            'name': 'Block_Groups',
-            'sub_service': '/Tracts*',
-            'layer': 4},
-        1: {
-            'name': 'Tracts',
-            'sub_service': '/Tracts*',
-            'layer': 3},
-        2: {
-            'name': 'Counties',
-            'sub_service': '/State*',
-            'layer': 11},
-        3: {
-            'name': 'Tribal_Tracts',
-            'sub_service': '/Tribal*',
-            'layer': 3},
-        4: {
-            'name': 'Tribal_Block_Groups',
-            'sub_service': '/Tribal*',
-            'layer': 4}
-        }
+    layer_dict = get_census_geo_layer_dict()
+
     sub_service = layer_dict[census_level]['sub_service']
 
     arc_gis_server = restapi.ArcServer(CENSUS_URL)
@@ -291,6 +311,9 @@ def export_server_URL_data(
 
     return (None, 'error')
 
+def ensure_path(file_path):
+    if not isinstance(file_path, Path):
+        return Path(file_path)
 
 def shp_to_gpkg(
         file_path,
@@ -303,6 +326,8 @@ def shp_to_gpkg(
     return of output file location
     """
     # get file name from path
+    file_path = ensure_path(file_path)
+
     file_path_splits = os.path.split(file_path)
     file_directory = file_path_splits[0]
     file_name = file_path_splits[-1]

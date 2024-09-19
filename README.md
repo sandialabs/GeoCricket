@@ -45,7 +45,11 @@ for simple intialization of python.
 
 3. Execute `pip install -e .` from main repo directory to install 
 package and allow modifications to be applied to the code without 
-re-installation.
+re-installation.  
+
+Note: If there are issues with packages not matching
+hashes in 'the requirements file', Execute `python -m pip cache purge`
+and try to install again. 
 
 4. Execute `conda install ipykernel` so that Jupyter Notebook demos 
 can run.
