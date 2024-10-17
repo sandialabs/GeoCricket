@@ -18,6 +18,9 @@ Current supported output file types:
 * kml
 * csv
 
+# Disclaimer
+Due to GeoCricket's reliance on external sources that may change location or availability over time, 
+parts of this package may break as those elements are changed remotely.
 
 ## Visuals
 Starting with any GeoPandas readable format, census geometry and statistics,
