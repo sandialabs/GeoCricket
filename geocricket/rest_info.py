@@ -29,7 +29,7 @@ def hifld_dict():
             'outCRS': 3857},
         'HIFLD_Cellular_Towers': {
             'service': 'Cellular_Towers_New',  # updated 20240727
-            'layer': 6,
+            'layer': 0,  # updated 20250311
             'idField': None,
             'color': None,
             'outCRS': 4326},
@@ -53,12 +53,6 @@ def hifld_dict():
             'outCRS': 4326},  # updated from 3857 20240427
         'HIFLD_Colleges_and_Universities_Campuses': {
             'service': 'Colleges_and_Universities_Campuses',
-            'layer': 0,
-            'idField': None,
-            'color': None,
-            'outCRS': 3857},
-        'HIFLD_Urgent_Care_Facilities': {
-            'service': 'Urgent_Care_Facilities',
             'layer': 0,
             'idField': None,
             'color': None,
@@ -113,13 +107,13 @@ def hifld_dict():
             'outCRS': 4326},
         'HIFLD_Microwave_Service_Towers': {
             'service': 'Microwave_Service_Towers_New',
-            'layer': 10,
+            'layer': 0, # updated 20250311
             'idField': None,
             'color': None,
             'outCRS': 4326},
         'HIFLD_BRS_EBS': {
             'service': 'brs_ebs',
-            'layer': 5,
+            'layer': 0, # updated 20250311
             'idField': None,
             'color': None,
             'outCRS': 4326},
@@ -129,17 +123,23 @@ def hifld_dict():
             'idField': None,
             'color': None,
             'outCRS': 3857},
+    }
+
+
+"""
+No longer provided by HIFLD to public:
         'HIFLD_State_Capitol_Buildings ': {
             'service': 'StateCapitolBuildings',
             'layer': 0,
             'idField': None,
             'color': None,
             'outCRS': 3857},
-    }
-
-
-"""
-No longer provided by HIFLD to public:
+        'HIFLD_Urgent_Care_Facilities': {
+            'service': 'Urgent_Care_Facilities',
+            'layer': 0,
+            'idField': None,
+            'color': None,
+            'outCRS': 3857},
         'HIFLD_Major_State_Government_Buildings': {
             'service': 'Major_State_Government_Buildings',
             'layer': 0,
@@ -267,6 +267,35 @@ def non_hifld_dict():
             'url': r"https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services",
             'service': "Dialysis_Facilities_in_the_United_States",
             'layer': 0,
+            'idField': None,
+            'color': None,
+            'outCRS': 3857},
+    }
+
+
+def usgs_dict():
+    """
+    Data collected from usgs server.
+    """
+    return {
+        'USGS_Fire_stations_EMS_stations': {
+            'url': r"https://carto.nationalmap.gov/arcgis/rest/services",
+            'service': "structures",
+            'layer': 16,
+            'idField': None,
+            'color': None,
+            'outCRS': 3857},
+        'USGS_Police_stations': {
+            'url': r"https://carto.nationalmap.gov/arcgis/rest/services",
+            'service': "structures",
+            'layer': 18,
+            'idField': None,
+            'color': None,
+            'outCRS': 3857},
+        'USGS_Hospitals_Medical_Centers': {
+            'url': r"https://carto.nationalmap.gov/arcgis/rest/services",
+            'service': "structures",
+            'layer': 14,
             'idField': None,
             'color': None,
             'outCRS': 3857},

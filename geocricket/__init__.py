@@ -23,6 +23,7 @@ from .transit_land import export_transit_land_geometry_bound_query
 
 from .rest_info import hifld_dict
 from .rest_info import non_hifld_dict
+from .rest_info import usgs_dict
 
 from .census_stats import get_census_stats
 

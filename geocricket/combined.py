@@ -195,6 +195,7 @@ def query_hifld(
 def query_non_hifld(
         geometry_bound,
         output_paths,
+        input_dict=gc.non_hifld_dict()
         ):
     """
     Query non-HIFLD sources for information related to infrstructure 
@@ -213,7 +214,7 @@ def query_non_hifld(
     pandas.DataFrame
         A dataframe with query results and final output locations.
     """
-    non_hifld_dict = gc.non_hifld_dict()
+    non_hifld_dict = input_dict
     ci_result_count = {}
 
     for key, _ in non_hifld_dict.items():
@@ -229,7 +230,7 @@ def query_non_hifld(
 
         # collect data from server, export shape file (default restapi)
         temp_out_path = gc.export_server_URL_data(
-            geometry_bound, 
+            geometry_bound,
             url,
             non_hifld_dict[key]['service'],
             non_hifld_dict[key]['layer'],
@@ -376,6 +377,13 @@ def collect(
         output_paths
     )
 
+    # query usgs - note different geo...
+    usgs_result = query_non_hifld(
+        b_geo_3857,
+        output_paths,
+        input_dict=gc.usgs_dict()
+    )
+
     # query non-HIFLD
     non_hifld_result = query_non_hifld(
         b_geo_4326,
@@ -384,6 +392,7 @@ def collect(
 
     # combine results
     census_result.update(hifld_result)
+    census_result.update(usgs_result)
     census_result.update(non_hifld_result)
 
     ci_result_df = pd.DataFrame.from_dict(census_result, orient='index')
