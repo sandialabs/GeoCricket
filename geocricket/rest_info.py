@@ -107,18 +107,24 @@ def hifld_dict():
             'outCRS': 4326},
         'HIFLD_Microwave_Service_Towers': {
             'service': 'Microwave_Service_Towers_New',
-            'layer': 0, # updated 20250311
+            'layer': 0,  # updated 20250311
             'idField': None,
             'color': None,
             'outCRS': 4326},
         'HIFLD_BRS_EBS': {
             'service': 'brs_ebs',
-            'layer': 0, # updated 20250311
+            'layer': 0,  # updated 20250311
             'idField': None,
             'color': None,
             'outCRS': 4326},
         'HIFLD_Federal_Organizations': {
             'service': 'organizationsfederal',
+            'layer': 0,
+            'idField': None,
+            'color': None,
+            'outCRS': 3857},
+        'HIFLD_Dialysis_Centers': {  # added 20250724
+            'service': 'Dialysis_Centers',
             'layer': 0,
             'idField': None,
             'color': None,
@@ -263,14 +269,22 @@ def non_hifld_dict():
             'idField': None,
             'color': None,
             'outCRS': 3857},
-        'Dialysis_Locations': {
-            'url': r"https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services",
-            'service': "Dialysis_Facilities_in_the_United_States",
-            'layer': 0,
-            'idField': None,
-            'color': None,
-            'outCRS': 3857},
     }
+
+
+"""
+No longer available from this location...
+However: wind storm locations/paths, blm field offices, and forest service 
+boundaries are.
+
+'Dialysis_Locations': {
+    'url': r"https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services",
+    'service': "Dialysis_Facilities_in_the_United_States",
+    'layer': 0,
+    'idField': None,
+    'color': None,
+    'outCRS': 3857},
+"""
 
 
 def usgs_dict():
