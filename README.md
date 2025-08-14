@@ -1,3 +1,5 @@
+NOTE:  In response to DHS priorities and related budget cuts, HIFLD Open will be discontinued August 26th, 2025.
+This means most of the data sources utilized by this tool will likely no longer work beyond that date.
 
 ![GeoCricket Logo](./images/GeoCricket_logo.png)
 
